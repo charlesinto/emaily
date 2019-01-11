@@ -1,0 +1,55 @@
+{
+  "name": "emaily",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "set NODE_ENV=DEVELOPMENT&& nodemon ./server/index.js --exec babel-node --require dotenv/config",
+    "start:prod": "set NODE_ENV=PRODUCTION&& npm run build && node ./dist/index.js",
+    "lint": "eslint server --fix",
+    "client:prod": "npm run build --prefix client",
+    "client": "npm run start --prefix client",
+    "start:dev": "concurrently \"npm run dev\" \"npm run client\"",
+    "start": "concurrently \"npm run start:prod\" \"npm run client:prod\"",
+    "build": "babel server -d dist --require dotenv/config",
+    "test": "set NODE_ENV=TEST&& nyc mocha server/test/**.test.js --compilers js:babel-core/register --timeout 20000 --exit",
+    "coverage": "nyc --reporter=lcov --reporter=text-lcov npm test",
+    "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/charlesinto/emaily.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/charlesinto/emaily/issues"
+  },
+  "homepage": "https://github.com/charlesinto/emaily#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-preset-es2015": "^6.24.1",
+    "body-parser": "^1.18.3",
+    "dotenv": "^6.2.0",
+    "eslint": "^5.12.0",
+    "http": "0.0.0",
+    "istanbul": "^0.4.5",
+    "jasmine": "^3.3.1",
+    "jasmine-console-reporter": "^3.1.0",
+    "jasmine-node": "^1.16.2",
+    "nodemon": "^1.18.9",
+    "nyc": "^13.1.0",
+    "path": "^0.12.7",
+    "socket.io": "^2.2.0"
+  },
+  "dependencies": {
+    "concurrently": "^4.1.0",
+    "cookie-session": "^2.0.0-beta.3",
+    "express": "^4.16.4",
+    "http-proxy-middleware": "^0.19.1",
+    "mongoose": "^5.4.2",
+    "passport": "^0.4.0",
+    "passport-google-oauth20": "^1.0.0"
+  }
+}
